@@ -42,7 +42,7 @@
         android:id="@+id/et_email"
         android:layout_width="364dp"
         android:layout_height="55dp"
-        android:background="@drawable/rounded_edittext"
+
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="10dp"
@@ -126,7 +126,7 @@
         android:layout_height="55dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="276dp"
-        android:background="@drawable/rounded_edittext"
+
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="10dp"
