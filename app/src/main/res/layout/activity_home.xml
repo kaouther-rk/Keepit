@@ -71,15 +71,15 @@
         android:id="@+id/notRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
+        android:importantForAccessibility="no"
         android:clipToPadding="false"
         android:paddingStart="0dp"
         android:paddingEnd="@dimen/_12sdp"
         android:paddingBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@+id/layoutQuikActions"
-        app:layout_constraintTop_toBottomOf="@+id/layoutSearch"/>
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSearch" />
 
     <LinearLayout
         android:id="@+id/layoutQuikActions"
