@@ -29,8 +29,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <!-- ألوان الملاحظات -->
-        <!-- مكرر لكل لون مع View و ImageView في FrameLayout -->
+
 
         <FrameLayout
             android:layout_width="0dp"
@@ -51,10 +50,7 @@
                 app:tint="@color/white" />
         </FrameLayout>
 
-        <!-- كرري هذا الجزء حسب عدد الألوان -->
-        <!-- ... viewColor2, ImageColor2 ... إلى viewColor5 -->
 
-        <!-- اللون 2 -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -73,7 +69,7 @@
                 app:tint="@color/white" />
         </FrameLayout>
 
-        <!-- اللون 3 -->
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -92,7 +88,7 @@
                 app:tint="@color/white" />
         </FrameLayout>
 
-        <!-- اللون 4 -->
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -111,7 +107,7 @@
                 app:tint="@color/white" />
         </FrameLayout>
 
-        <!-- اللون 5 -->
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -141,7 +137,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_13ssp" />
 
-    <!-- زر إضافة صورة -->
+
     <LinearLayout
         android:id="@+id/layoutAddImage"
         android:layout_width="match_parent"
@@ -169,7 +165,7 @@
             android:textSize="@dimen/_12ssp" />
     </LinearLayout>
 
-    <!-- زر إضافة رابط -->
+
     <LinearLayout
         android:id="@+id/layoutAddUrl"
         android:layout_width="match_parent"
@@ -197,6 +193,37 @@
             android:text="add url"
             android:textColor="@color/colorIcon"
             android:textSize="@dimen/_12ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutDeleteNote"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_delete"
+            app:tint="@color/colorDelete" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:includeFontPadding="false"
+            android:text="delete note"
+            android:textColor="@color/colorDelete"
+            android:textSize="@dimen/_12ssp" />
+
     </LinearLayout>
 
 </LinearLayout>
