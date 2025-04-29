@@ -1,12 +1,9 @@
 package com.example.keepit.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -23,6 +20,8 @@ import com.example.keepit.listeners.NotesListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Home extends AppCompatActivity implements NotesListener {
 
@@ -33,8 +32,9 @@ public class Home extends AppCompatActivity implements NotesListener {
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
     private NotesAdapter notesAdapter;
-
     private int noteClickedPosition = -1;
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +42,10 @@ public class Home extends AppCompatActivity implements NotesListener {
         setContentView(R.layout.activity_home);
 
         ImageView imageAddNoteMain = findViewById(R.id.imageAddNoteMain);
-        imageAddNoteMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(
-                        new Intent(getApplicationContext(), CreateNoteActivity.class),
-                        REQUEST_CODE_ADD_NOTE
-                );
-            }
-        });
+        imageAddNoteMain.setOnClickListener(v -> startActivityForResult(
+                new Intent(getApplicationContext(), CreateNoteActivity.class),
+                REQUEST_CODE_ADD_NOTE
+        ));
 
         notesRecyclerView = findViewById(R.id.notRecyclerView);
         notesRecyclerView.setLayoutManager(
@@ -65,21 +60,13 @@ public class Home extends AppCompatActivity implements NotesListener {
 
         EditText inputSearch = findViewById(R.id.inputsearch);
         inputSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-              if (noteList.size() != 0) {
-                  notesAdapter.searchNotes(s.toString());
-              }
+                if (!noteList.isEmpty()) {
+                    notesAdapter.searchNotes(s.toString());
+                }
             }
         });
     }
@@ -94,21 +81,14 @@ public class Home extends AppCompatActivity implements NotesListener {
     }
 
     private void getNotes(final int requestCode, final boolean isNoteDeleted) {
-        @SuppressLint("StaticFieldLeak")
-        class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
+        executor.execute(() -> {
+            List<Note> notes = NoteDatabase
+                    .getNoteDatabase(getApplicationContext())
+                    .noteDao().getAllNotes();
 
-            @Override
-            protected List<Note> doInBackground(Void... voids) {
-                return NoteDatabase
-                        .getNoteDatabase(getApplicationContext())
-                        .noteDao().getAllNotes();
-            }
-
-            @Override
-            protected void onPostExecute(List<Note> notes) {
-                super.onPostExecute(notes);
-
+            runOnUiThread(() -> {
                 if (requestCode == REQUEST_CODE_SHOW_NOTES) {
+                    noteList.clear();
                     noteList.addAll(notes);
                     notesAdapter.notifyDataSetChanged();
 
@@ -126,10 +106,8 @@ public class Home extends AppCompatActivity implements NotesListener {
                         notesAdapter.notifyItemChanged(noteClickedPosition);
                     }
                 }
-            }
-        }
-
-        new GetNotesTask().execute();
+            });
+        });
     }
 
     @Override
@@ -138,7 +116,6 @@ public class Home extends AppCompatActivity implements NotesListener {
 
         if (requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK) {
             getNotes(REQUEST_CODE_ADD_NOTE, false);
-
         } else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK) {
             if (data != null) {
                 getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra("isNoteDeleted", false));

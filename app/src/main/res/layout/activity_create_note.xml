@@ -10,8 +10,8 @@
     tools:context=".activities.CreateNoteActivity">
 
     <ScrollView
-        android:layout_width="403dp"
-        android:layout_height="918dp"
+        android:layout_width="396dp"
+        android:layout_height="904dp"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -140,10 +140,10 @@
                 android:contentDescription="@string/app_name"
                 android:padding="@dimen/_4sdp"
                 android:src="@drawable/ic_delete"
-                android:tint="@color/white"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/imageNote"
-                app:layout_constraintTop_toTopOf="@id/imageNote" />
+                app:layout_constraintTop_toTopOf="@id/imageNote"
+                app:tint="@color/white" />
 
             <LinearLayout
                 android:id="@+id/layoutWebUrl"
@@ -155,7 +155,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/imageNote" >
+                app:layout_constraintTop_toBottomOf="@+id/imageNote">
 
                 <TextView
                     android:id="@+id/textWebUrl"
@@ -175,8 +175,6 @@
                     android:src="@drawable/ic_delete"
                     app:tint="@color/colorDelete" />
             </LinearLayout>
-
-
 
 
             <EditText

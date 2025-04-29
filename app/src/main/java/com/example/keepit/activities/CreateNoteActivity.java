@@ -23,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -63,11 +62,11 @@ public class CreateNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_note);
-
         ImageView imageBack = findViewById(R.id.imageBack);
-        imageBack.setOnClickListener(v -> onBackPressed());
+        imageBack.setOnClickListener(v -> {
+            onBackPressed();
+        });
 
         inputNoteTitle = findViewById(R.id.inputNoteTitle);
         inputNotesubtitle = findViewById(R.id.inputNotesubtitle);
@@ -82,8 +81,13 @@ public class CreateNoteActivity extends AppCompatActivity {
                 new SimpleDateFormat("EEEE, dd MMMM yyyy H:mm a", Locale.getDefault()).format(new Date())
         );
 
-        ImageView imagesave = findViewById(R.id.imagesave);
-        imagesave.setOnClickListener(v -> saveNote());
+        ImageView imageSave = findViewById(R.id.imagesave);
+        imageSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveNote();
+            }
+        });
 
         selectedNoteColor = "#333333";
         selectedImagePath = "";
@@ -130,7 +134,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     private void saveNote() {
         if (inputNoteTitle.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Note can't be empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Note title can't be empty!", Toast.LENGTH_SHORT).show();
             return;
         } else if (inputNotesubtitle.getText().toString().trim().isEmpty() &&
                 inputNoteText.getText().toString().trim().isEmpty()) {
@@ -164,7 +168,9 @@ public class CreateNoteActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Void avoid) {
-                setResult(RESULT_OK, new Intent());
+                super.onPostExecute(avoid);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
                 finish();
             }
         }

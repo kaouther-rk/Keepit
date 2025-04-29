@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context=".activities.LoginActivity">
 
@@ -15,6 +16,7 @@
         android:layout_height="63dp"
         android:backgroundTint="@color/primaryColor"
         android:text="LOGIN"
+        android:textColor="@color/onPrimary"
         android:textSize="20sp"
         app:circularflow_radiusInDP=" "
         app:cornerRadius="15dp"
